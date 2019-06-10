@@ -1,0 +1,12 @@
+#!/bin/sh
+#unmount USB partition
+if df | grep -q /usb$ ; then
+	umount /usb 2>/dev/null
+  	echo "{\"message\": \"/usb unmounted\"}"
+else  
+	echo  "{\"message\": \"/usb alredy unmounted\"}"  
+
+fi
+
+
+
