@@ -182,145 +182,101 @@ int main( int argc, char *argv[] )
   dac_ok = 0x0;
   sc_get_ADC_values (file);
 
-/*
-	 fprintf (fp, "\"V_1V0\":%.1f,",(float)adc_buffer[V_1V0]*LSB_TO_1V0);
-	 fprintf (fp, "\"V_1V0\":%.1f,",(float)adc_buffer[I_1V0]*LSB_TO_1V0/60.*41.67); // 41.67=1/0.024
-//	 fprintf("\n1V2\t");
-	 fprintf (fp, "\"V_1V2\":%.1f,",(float)adc_buffer[V_1V2]*LSB_TO_1V2);
-	 fprintf (fp, "\"V_1V2\":%.1f,",(float)adc_buffer[I_1V2]*LSB_TO_1V0/60.*10.);   // 10=1/.1
-//	 fprintf( "\n1V8\t");
-	 fprintf (fp, "\"V_1V8\":%.1f,",(float)adc_buffer[V_1V8]*LSB_TO_1V8);
-	 fprintf (fp, "\"V_1V8\":%.1f,",(float)adc_buffer[I_1V8]*LSB_TO_1V0/60.*30.3); // 30.3 =1/0.033
-//	 printf("\n3V3\t");
-	 fprintf (fp, "\"V_3V3\":%.1f,",(float)adc_buffer[V_3V3]*LSB_TO_3V3);
-	 fprintf (fp, "\"I_3V3\":%.1f,",(float)adc_buffer[I_3V3]*LSB_TO_3V3/60.*16.13); // 16.13 = 1/0.062
-	 fprintf (fp, "\"I_3V3_SC\":%.1f,",(float)adc_buffer[I_3V3_SC]*LSB_TO_1V0/60.*12.2); // 12.2 = 1/0.082
-//	 printf("\nP3V3\t");
-	 fprintf (fp, "\"V_AN_P5V\":%.1f,",(float)adc_buffer[V_AN_P5V]*LSB_TO_3V3);
-	 fprintf (fp, "\"I_P5V_ANA\":%.1f,",(float)adc_buffer[I_P5V_ANA]*LSB_TO_1V0/60.*12.2);
-//	 printf("\nN3V3\t");
-	 float Ua =(float)adc_buffer[V_AN_N5V]*LSB_TO_3V3;
-//	 printf("\t %.1f %s",Ua*2.-(10./7.5 * (2500.-Ua)),"[mV] ");
-	 fprintf (fp, "\"I_N5V_ANA\":%.1f,",(float)adc_buffer[I_N5V_ANA]*LSB_TO_1V0/60.*12.2);
-//	 printf("\n5V\t");
-	 fprintf (fp, "\"V_GPS_5V\":%.1f,",(float)adc_buffer[V_GPS_5V]*LSB_TO_5V);
-	 fprintf (fp, "\"I_GPS_5V\":%.1f,",(float)adc_buffer[I_GPS_5V]*LSB_TO_1V0/60.*10);
-//	 printf("\n12V Radio");
-	 fprintf (fp, "\"V_RADIO_12V\":%.1f,",(float)adc_buffer[V_RADIO_12V]*LSB_TO_12V);
-	 fprintf (fp, "\"I_RADIO_12V\":%.1f,",(float)adc_buffer[I_RADIO_12V]*LSB_TO_1V0/60.*30.3);
-//	 printf("\n12V PMTs");
-	 fprintf (fp, "\"V_PMTS_12V\":%.1f,",(float)adc_buffer[V_PMTS_12V]*LSB_TO_12V);
-	 fprintf (fp, "\"I_PMTS_12V\":%.1f,",(float)adc_buffer[I_PMTS_12V]*LSB_TO_1V0/60.*30.3);
-//	 printf("\n24V EXT1/2");
- *
-	 fprintf (fp, "\"V_EXT1_24V\":%.1f,",(float)adc_buffer[V_EXT1_24V]*LSB_TO_24V/1000);
-	 fprintf (fp, "\"I_V_INPUTS\":%.1f,",(float)adc_buffer[I_V_INPUTS]*LSB_TO_1V0/60.*21.28); // 21.28=1/0.047
-	 fprintf (fp, "\"V_EXT2_24V\":%.1f,",(float)adc_buffer[V_EXT2_24V]*LSB_TO_24V/1000);
-
-
-//	 printf("\nTPCB \n");
-
-	 fprintf (fp, "\"BAT1_TEMP\":%.1f,",adc_buffer[BAT1_TEMP]*LSB_TO_5V);
-	 fprintf (fp, "\"BAT2_TEMP\":%.1f,",adc_buffer[BAT2_TEMP]*LSB_TO_5V);
-	 fprintf (fp, "\"EXT_TEMP\":%.1f,",adc_buffer[EXT_TEMP]*LSB_TO_5V);
-
-	 fprintf (fp, "\"BAT_CENT\":%.1f,",adc_buffer[BAT_CENT]*LSB_TO_5V*18./5000.);
-	 fprintf (fp, "\"BAT_OUT\":%.1f,",adc_buffer[BAT_OUT]*LSB_TO_5V*36./5000.);
-
-	 fprintf (fp, "\"LOADCURR\":%.1f,",adc_buffer[LOADCURR]*LSB_TO_5V/48.);
-	 fprintf (fp, "\"SP_VOLT\":%.1f,",adc_buffer[SP_VOLT]*LSB_TO_5V*50./5000);
-	 fprintf (fp, "\"SP_CURR\":%.1f,",adc_buffer[SP_CURR]*LSB_TO_5V*5./1000.);
-
-	 fprintf (fp, "\"P12V_LI\":%.1f,",adc_buffer[P12V_LI]);
-	 fprintf (fp, "\"P12V_HI_1\":%.1f,",adc_buffer[P12V_HI_1]);
-	 fprintf (fp, "\"P12V_HI_3\":%.1f,",adc_buffer[P12V_HI_3]);
-//	 printf("\nSensors ");
-	 fprintf (fp, "\"T_AIR\":%.1f,",adc_buffer[T_AIR]);
-	 fprintf (fp, "\"P_AIR\":%.1f,",adc_buffer[P_AIR]);
-	 fprintf (fp, "\"T_WAT\":%.1f",adc_buffer[T_WAT]);
-*/
 
 
 // print reply with data for javascript request
-  	  	  	  	 printf("{");
-	 		 	 printf ("\"V_EXT1_24V\":%.1f,",(float)adc_buffer[V_EXT1_24V]*LSB_TO_24V/1000);
-	 		     printf ("\"I_V_INPUTS\":%.1f,",(float)adc_buffer[I_V_INPUTS]*LSB_TO_1V0/60.*21.28); // 21.28=1/0.047
 
 
-	 		    printf ("\"SP_VOLT\":%.1f,",adc_buffer[SP_VOLT]*LSB_TO_5V*50./5000);
-	 		    printf ("\"SP_CURR\":%.1f,",adc_buffer[SP_CURR]*LSB_TO_5V*5./1000.);
-		//	 printf ("\"LOADCURR\":%.1f,",adc_buffer[LOADCURR]*LSB_TO_5V/48.);
+	 	printf("{");
+
+	 	printf ("\"PMT1_HVM\":%.1f,",(float)adc_buffer[PMT1_HVM] *LSB_TO_5V*  2.2);// aggiunta correzione !!!!!!!!!!!!!!
+	 	printf ("\"PMT1_CM\":%.1f,",(float)adc_buffer[PMT1_CM] *LSB_TO_5V);
+	 	printf ("\"PMT1_TM\":%.1f,",(float)adc_buffer[PMT1_TM] *LSB_TO_5V);
+
+	 	printf ("\"PMT2_HVM\":%.1f,",(float)adc_buffer[PMT2_HVM] *LSB_TO_5V*  2.2);
+	 	printf ("\"PMT2_CM\":%.1f,",(float)adc_buffer[PMT2_CM] *LSB_TO_5V);
+	 	printf ("\"PMT2_TM\":%.1f,",(float)adc_buffer[PMT2_TM] *LSB_TO_5V);
+
+	 	printf ("\"PMT3_HVM\":%.1f,",(float)adc_buffer[PMT3_HVM] *LSB_TO_5V*  2.2);
+	 	printf ("\"PMT3_CM\":%.1f,",(float)adc_buffer[PMT3_CM] *LSB_TO_5V);
+	 	printf ("\"PMT3_TM\":%.1f,",(float)adc_buffer[PMT3_TM] *LSB_TO_5V);
+
+	 	printf ("\"PMT4_HVM\":%.1f,",(float)adc_buffer[PMT4_HVM] *LSB_TO_5V*  2.2);
+	 	printf ("\"PMT4_CM\":%.1f,",(float)adc_buffer[PMT4_CM] *LSB_TO_5V);
+	 	printf ("\"PMT4_TM\":%.1f,",(float)adc_buffer[PMT4_TM] *LSB_TO_5V);
+
+	 	printf ("\"PMT5_HVM\":%.1f,",(float)adc_buffer[PMT5_HVM] *LSB_TO_5V*  2.2);
+	 	printf ("\"PMT5_CM\":%.1f,",(float)adc_buffer[PMT5_CM] *LSB_TO_5V);
+	 	printf ("\"PMT5_TM\":%.1f,",(float)adc_buffer[PMT5_TM] *LSB_TO_5V);
+
+	 	printf ("\"PMT6_HVM\":%.1f,",voltage);
+	 	printf ("\"PMT6_CM\":%.1f,",current);
+	 	printf ("\"PMT6_TM\":%.1f,",temp);
+
+	 	printf ("\"V_1V0\":%.2f,",(float)adc_buffer[V_1V0]*LSB_TO_1V0/1000);
+	 	printf ("\"I_1V0\":%.2f,",(float)adc_buffer[I_1V0]*LSB_TO_1V0/60.*41.67); // 41.67=1/0.024
+
+	 	printf ("\"V_1V2\":%.2f,",(float)adc_buffer[V_1V2]*LSB_TO_1V2/1000);
+	 	printf ("\"I_1V2\":%.2f,",(float)adc_buffer[I_1V2]*LSB_TO_1V0/60.*10.);   // 10=1/.1
+
+	 	printf ("\"V_1V8\":%.2f,",(float)adc_buffer[V_1V8]*LSB_TO_1V8/1000);
+	 	printf ("\"I_1V8\":%.2f,",(float)adc_buffer[I_1V8]*LSB_TO_1V0/60.*30.3); // 30.3 =1/0.033
+
+	 	printf ("\"V_3V3\":%.2f,",(float)adc_buffer[V_3V3]*LSB_TO_3V3/1000);
+	 	printf ("\"I_3V3\":%.1f,",(float)adc_buffer[I_3V3]*LSB_TO_3V3/60.*16.13); // 16.13 = 1/0.062
+		printf ("\"I_3V3_SC\":%.1f,",(float)adc_buffer[I_3V3_SC]*LSB_TO_1V0/60.*12.2); // 12.2 = 1/0.082
+
+		printf ("\"V_AN_P5V\":%.2f,",(float)adc_buffer[V_AN_P5V]*LSB_TO_3V3/1000);
+		printf ("\"I_P5V_ANA\":%.2f,",(float)adc_buffer[I_P5V_ANA]*LSB_TO_1V0/60.*12.2);
+
+		float Ua =(float)adc_buffer[V_AN_N5V]*LSB_TO_3V3;
+	    printf ("\"V_N5V_ANA\":%.2f,",Ua*2.-(10./7.5 * (2500.-Ua)/1000));
+		printf ("\"I_N5V_ANA\":%.2f,",(float)adc_buffer[I_N5V_ANA]*LSB_TO_1V0/60.*12.2);
+
+	    printf ("\"V_GPS_5V\":%.2f,",(float)adc_buffer[V_GPS_5V]*LSB_TO_5V/1000);
+	   	printf ("\"I_GPS_5V\":%.2f,",(float)adc_buffer[I_GPS_5V]*LSB_TO_1V0/60.*10);
+
+	 	printf ("\"V_RADIO_12V\":%.1f,",(float)adc_buffer[V_RADIO_12V]*LSB_TO_12V/1000);
+	 	printf ("\"I_RADIO_12V\":%.1f,",(float)adc_buffer[I_RADIO_12V]*LSB_TO_1V0/60.*30.3);
+
+		printf ("\"V_PMTS_12V\":%.1f,",(float)adc_buffer[V_PMTS_12V]*LSB_TO_12V/1000);
+		printf ("\"I_PMTS_12V\":%.1f,",(float)adc_buffer[I_PMTS_12V]*LSB_TO_1V0/60.*30.3);
+
+        printf ("\"V_EXT1_24V\":%.1f,",(float)adc_buffer[V_EXT1_24V]*LSB_TO_24V/1000);
+        printf ("\"V_EXT2_24V\":%.1f,",(float)adc_buffer[V_EXT2_24V]*LSB_TO_24V/1000);
+		printf ("\"I_V_INPUTS\":%.1f,",(float)adc_buffer[I_V_INPUTS]*LSB_TO_1V0/60.*21.28); // 21.28=1/0.047
+
+		printf("\"BAT1\":%.1f,", adc_buffer[BAT1_TEMP]*LSB_TO_5V);
+		printf("\"BAT2\":%.1f,", adc_buffer[BAT2_TEMP]*LSB_TO_5V);
+		printf("\"EXT_TEMP\":%.1f,", adc_buffer[EXT_TEMP]*LSB_TO_5V);
+
+
+		printf ("\"BAT_CENT\":%.1f,",adc_buffer[BAT_CENT]*LSB_TO_5V*18./5000.);
+		printf ("\"BAT_OUT\":%.1f,",adc_buffer[BAT_OUT]*LSB_TO_5V*36./5000.);
+
+      	printf ("\"LOADCURR\":%.1f,",adc_buffer[LOADCURR]*LSB_TO_5V/48.);
+		printf ("\"SP_VOLT\":%.1f,",adc_buffer[SP_VOLT]*LSB_TO_5V*50./5000);
+		printf ("\"SP_CURR\":%.1f,",adc_buffer[SP_CURR]*LSB_TO_5V*5./1000.);
+
+		 printf("\"P12V_LI\":%.2f,", (float)adc_buffer[P12V_LI]);
 
 
 
-	 		 //    printf ("\"BAT_CENT\":%.1f,",adc_buffer[BAT_CENT]*LSB_TO_5V*18./5000.);
-	 		 //    printf ("\"BAT_OUT\":%.1f,",adc_buffer[BAT_OUT]*LSB_TO_5V*36./5000.);
+		 printf("\"P12V_HI1\":%.2f,", (float)adc_buffer[P12V_HI_1]);
 
-	 		     printf ("\"V_1V0\":%.2f,",(float)adc_buffer[V_1V0]*LSB_TO_1V0/1000);
-	 		     printf ("\"I_1V0\":%.2f,",(float)adc_buffer[I_1V0]*LSB_TO_1V0/60.*41.67); // 41.67=1/0.024
+		 printf("\"P12V_HI2\":%.2f,", (float)adc_buffer[P12V_HI_2]);
 
-	 		     printf ("\"V_1V2\":%.2f,",(float)adc_buffer[V_1V2]*LSB_TO_1V2/1000);
-	 		     printf ("\"I_1V2\":%.2f,",(float)adc_buffer[I_1V2]*LSB_TO_1V0/60.*10.);   // 10=1/.1
+		 printf("\"P12V_HI3\":%.2f,", (float)adc_buffer[P12V_HI_3]);
 
-	 		     printf ("\"V_1V8\":%.2f,",(float)adc_buffer[V_1V8]*LSB_TO_1V8/1000);
-	 		     printf ("\"I_1V8\":%.2f,",(float)adc_buffer[I_1V8]*LSB_TO_1V0/60.*30.3); // 30.3 =1/0.033
+		 printf ("\"T_AIR\":%.1f,",adc_buffer[T_AIR]);
 
-	 		    printf ("\"V_3V3\":%.2f,",(float)adc_buffer[V_3V3]*LSB_TO_3V3/1000);
-	 		  //  printf ("\"I_3V3\":%.1f,",(float)adc_buffer[I_3V3]*LSB_TO_3V3/60.*16.13); // 16.13 = 1/0.062
-	 		    printf ("\"I_3V3_SC\":%.1f,",(float)adc_buffer[I_3V3_SC]*LSB_TO_1V0/60.*12.2); // 12.2 = 1/0.082
-                printf ("\"V_GPS_5V\":%.2f,",(float)adc_buffer[V_GPS_5V]*LSB_TO_5V/1000);
-	 		   	printf ("\"I_GPS_5V\":%.2f,",(float)adc_buffer[I_GPS_5V]*LSB_TO_1V0/60.*10);
-	            printf ("\"V_RADIO_12V\":%.1f,",(float)adc_buffer[V_RADIO_12V]*LSB_TO_12V/1000);
-	 		 	printf ("\"I_RADIO_12V\":%.1f,",(float)adc_buffer[I_RADIO_12V]*LSB_TO_1V0/60.*30.3);
+		 printf ("\"P\":%d,",adc_buffer[P_AIR]);
 
-	 			printf ("\"V_PMTS_12V\":%.1f,",(float)adc_buffer[V_PMTS_12V]*LSB_TO_12V/1000);
-	 			printf ("\"I_PMTS_12V\":%.1f,",(float)adc_buffer[I_PMTS_12V]*LSB_TO_1V0/60.*30.3);
-	 		    printf ("\"LOADCURR\":%.1f,",adc_buffer[LOADCURR]*LSB_TO_5V/48.);
-	 		 	 printf ("\"PMT1_HVM\":%.1f,",(float)adc_buffer[PMT1_HVM] *LSB_TO_5V*  2.2);// aggiunta correzione !!!!!!!!!!!!!!
-	 		 	 printf ("\"PMT1_CM\":%.1f,",(float)adc_buffer[PMT1_CM] *LSB_TO_5V);
+		 printf ("\"TW\":%d",adc_buffer[T_WAT]); //*0.1K
 
-	 		 	 printf ("\"PMT2_HVM\":%.1f,",(float)adc_buffer[PMT2_HVM] *LSB_TO_5V*  2.2);
-	 		 	 printf ("\"PMT2_CM\":%.1f,",(float)adc_buffer[PMT2_CM] *LSB_TO_5V);
-	 	//	 	 printf ("\"PMT2_TM\":%.1f,",(float)adc_buffer[PMT2_TM] *LSB_TO_5V);
-
-	 		 	 printf ("\"PMT3_HVM\":%.1f,",(float)adc_buffer[PMT3_HVM] *LSB_TO_5V*  2.2);
-	 		 	 printf ("\"PMT3_CM\":%.1f,",(float)adc_buffer[PMT3_CM] *LSB_TO_5V);
-	 	//	 	 printf ("\"PMT3_TM\":%.1f,",(float)adc_buffer[PMT3_TM] *LSB_TO_5V);
-
-	 		 	 printf ("\"PMT4_HVM\":%.1f,",(float)adc_buffer[PMT4_HVM] *LSB_TO_5V*  2.2);
-	 		 	 printf ("\"PMT4_CM\":%.1f,",(float)adc_buffer[PMT4_CM] *LSB_TO_5V);
-	 	//	 	 printf ("\"PMT4_TM\":%.1f,",(float)adc_buffer[PMT4_TM] *LSB_TO_5V);
-
-	 		 	 printf ("\"PMT5_HVM\":%.1f,",(float)adc_buffer[PMT5_HVM] *LSB_TO_5V*  2.2);
-	 		 	 printf ("\"PMT5_CM\":%.1f,",(float)adc_buffer[PMT5_CM] *LSB_TO_5V);
-	 		// 	 printf ("\"PMT5_TM\":%.1f",(float)adc_buffer[PMT5_TM] *LSB_TO_5V);
-
-	 		 	 printf ("\"PMT6_HVM\":%.1f,",voltage);
-	 		 	 printf ("\"PMT6_CM\":%.1f,",current);
-	 		 	 printf ("\"PMT6_TM\":%.1f",temp);
-/*
-	 		   	printf ("\"V_AN_P5V\":%.2f,",(float)adc_buffer[V_AN_P5V]*LSB_TO_3V3/1000);
-	 		   	printf ("\"I_P5V_ANA\":%.2f,",(float)adc_buffer[I_P5V_ANA]*LSB_TO_1V0/60.*12.2);
-	 		   	float Ua =(float)adc_buffer[V_AN_N5V]*LSB_TO_3V3;
-	 		    printf ("\"V_N5V_ANA\":%.2f,",Ua*2.-(10./7.5 * (2500.-Ua)/1000));
- //printf ("\"V_N5V_ANA\":%.2f,",(float)adc_buffer[V_AN_P5V]*LSB_TO_3V3/1000);
-	 		   	printf ("\"I_N5V_ANA\":%.2f,",(float)adc_buffer[I_N5V_ANA]*LSB_TO_1V0/60.*12.2);
+	 	printf("}");
 
 
-
-
-
-
-	 		 	printf ("\"T_AIR\":%.1f",adc_buffer[T_AIR]);
-
-*/
-	 	//	 	 printf ("\"PMT1_TM\":%.1f,",(float)adc_buffer[PMT1_TM] *LSB_TO_5V);
-
-
-
-
-
-	 	 printf("}");
 
 /*
 
