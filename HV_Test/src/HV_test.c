@@ -10,6 +10,12 @@
 #define SC_ADDR		0x0f
 char buf[160];
 static const char *optString = "sStp:v:P::Aah?";
+void higth();
+void write_array(float *pmtvalue);
+
+//void write_hig();
+void low();
+//void write_low();
 /* Read SlowControl serial Number */
 void sc_serial ( int file, char *b)
 {   char reg[] ={0x01, 0x00};
@@ -120,9 +126,39 @@ void display_usage( char *s )
 
 int main( int argc, char *argv[])
 {
+	FILE *fp, *fp1;
+	int i;
+	float pmtlow[10], pmthig[10];
+	higth();
+	sleep(5);
+	write_array(pmthig);
+	sleep(5);
+	low();
+	sleep(5);
+	write_array(pmtlow);
+
+	//JSON
+
+	 printf("{");
+
+	 printf ("\"PMT1_HVM_diff\":%.1f,",pmthig[0]-pmtlow[0]);// aggiunta correzione !!!!!!!!!!!!!!
+	 printf ("\"PMT2_HVM_diff\":%.1f,",pmthig[1]-pmtlow[1]);// aggiunta correzione !!!!!!!!!!!!!!
+	 printf ("\"PMT3_HVM_diff\":%.1f,",pmthig[2]-pmtlow[2]);// aggiunta correzione !!!!!!!!!!!!!!
+	 printf ("\"PMT4_HVM_diff\":%.1f,",pmthig[3]-pmtlow[3]);// aggiunta correzione !!!!!!!!!!!!!!
+	 printf ("\"PMT5_HVM_diff\":%.1f,",pmthig[4]-pmtlow[4]);// aggiunta correzione !!!!!!!!!!!!!!
+	 printf ("\"PMT6_HVM_diff\":%.1f",pmthig[5]-pmtlow[5]);// aggiunta correzione !!!!!!!!!!!!!!
+
+	 printf("}");
+
+
+  }
+
+void write_array(float *pmtvalue)
+{
+
     int opt = 0;
 	int file, i, j, ch, val,a,b,c,d,e,f,g,h;
-	FILE *fp;
+	FILE *fp, *fp1;
 	char filename[20];
 	char filename1[100];
 	char namedate[20];
@@ -178,65 +214,155 @@ int main( int argc, char *argv[])
   char dac_ok;
   dac_ok = 0x0;
   sc_get_ADC_values (file);
-// print reply
-
-  float pmt1[2], pmt2[2], pmt3[2], pmt4[2], pmt5[2], pmt6[2];
-  float diffpmt1, diffpmt2, diffpmt3, diffpmt4, diffpmt5, diffpmt6;
-
-//setting low value
-	 sc_set_dac (file, 1, 0);
-	 sc_set_dac (file, 2, 0);
-	 sc_set_dac (file, 3, 0);
-	 sc_set_dac (file, 4, 0);
-	 sc_set_dac (file, 5, 0);
-	 sc_set_dac (file, 6, 0);
-
-pmt1[0]=(float)adc_buffer[PMT1_HVM] *LSB_TO_5V*  2.2;
-pmt2[0]=(float)adc_buffer[PMT2_HVM] *LSB_TO_5V*  2.2;
-pmt3[0]=(float)adc_buffer[PMT3_HVM] *LSB_TO_5V*  2.2;
-pmt4[0]=(float)adc_buffer[PMT4_HVM] *LSB_TO_5V*  2.2;
-pmt5[0]=(float)adc_buffer[PMT5_HVM] *LSB_TO_5V*  2.2;
-pmt6[0]=voltage;
-
-sleep(5);
-
-//setting upper value
-sc_set_dac (file, 1, 4095);
-sc_set_dac (file, 2, 4095);
-sc_set_dac (file, 3, 4095);
-sc_set_dac (file, 4, 4095);
-sc_set_dac (file, 5, 4095);
-sc_set_dac (file, 6, 4095);
 
 
 
-pmt1[1]=(float)adc_buffer[PMT1_HVM] *LSB_TO_5V*  2.2;
-pmt2[1]=(float)adc_buffer[PMT2_HVM] *LSB_TO_5V*  2.2;
-pmt3[1]=(float)adc_buffer[PMT3_HVM] *LSB_TO_5V*  2.2;
-pmt4[1]=(float)adc_buffer[PMT4_HVM] *LSB_TO_5V*  2.2;
-pmt5[1]=(float)adc_buffer[PMT5_HVM] *LSB_TO_5V*  2.2;
-pmt6[1]=voltage;
-
-diffpmt1=pmt1[1]-pmt1[0];
-diffpmt2=pmt2[1]-pmt2[0];
-diffpmt3=pmt3[1]-pmt3[0];
-diffpmt4=pmt4[1]-pmt4[0];
-diffpmt5=pmt5[1]-pmt5[0];
-diffpmt6=pmt6[1]-pmt6[0];
-
-//JSON
- printf("{");
-
- printf ("\"PMT1_HVM_diff\":%.1f,",diffpmt1);// aggiunta correzione !!!!!!!!!!!!!!
- printf ("\"PMT2_HVM_diff\":%.1f,",diffpmt2);// aggiunta correzione !!!!!!!!!!!!!!
- printf ("\"PMT3_HVM_diff\":%.1f,",diffpmt3);// aggiunta correzione !!!!!!!!!!!!!!
- printf ("\"PMT4_HVM_diff\":%.1f,",diffpmt4);// aggiunta correzione !!!!!!!!!!!!!!
- printf ("\"PMT5_HVM_diff\":%.1f,",diffpmt5);// aggiunta correzione !!!!!!!!!!!!!!
- printf ("\"PMT6_HVM_diff\":%.1f",diffpmt6);// aggiunta correzione !!!!!!!!!!!!!!
-
- printf("}");
-
+	 pmtvalue[0]=(float)adc_buffer[PMT1_HVM] *LSB_TO_5V* 2.2;
+	 pmtvalue[1]=(float)adc_buffer[PMT2_HVM] *LSB_TO_5V* 2.2;
+	 pmtvalue[2]=(float)adc_buffer[PMT3_HVM] *LSB_TO_5V* 2.2;
+	 pmtvalue[3]=(float)adc_buffer[PMT4_HVM] *LSB_TO_5V* 2.2;
+	 pmtvalue[4]=(float)adc_buffer[PMT5_HVM] *LSB_TO_5V* 2.2;
+	 pmtvalue[5]=(float)adc_buffer[PMT6_HVM] *LSB_TO_5V* 2.2;
 
 
 
   }
+
+void higth(){
+	 int opt = 0;
+		int file, i, j, ch, val,a,b,c,d,e,f,g,h;
+		FILE *fp, *fp1;
+		char filename[20];
+		char filename1[100];
+		char namedate[20];
+		time_t rawtime;
+		struct tm *timeinfo;
+	 	char buffer[80];
+		time ( &rawtime );
+		timeinfo = localtime ( &rawtime );
+		strftime(namedate,20,"%y%m%d%H%M%S",timeinfo);
+
+	//  printf("Settings Slow Control... ");
+	  snprintf(filename, 19, "/dev/i2c-0");
+	  	file = open(filename, O_RDWR);
+	  	if (file < 0) {
+	  			exit("no open file");
+	  	}
+	  	if (ioctl(file, I2C_SLAVE, SC_ADDR) < 0) {
+	  			exit("Fail to setup slave addr!");
+	  	}
+
+
+
+	// system ("SiPM_control HPO");
+
+	// data from SiPM if connected
+		#define BUFSIZE 128
+	    char *cmd = "SiPM_control HPO";
+	    char *buf[BUFSIZE];
+	    FILE *fg;
+	    if ((fg = popen(cmd, "r")) == NULL) {
+	        printf("Error opening pipe!\n");
+	        return -1;
+	    }
+
+
+	    char *string = buf;
+	//    printf("%c\n", string[1]);
+	    float dummy, voltage, current, temp;
+	    char string1[12],string2[10],string3[5],string4[7];
+
+	   while (fgets(buf, BUFSIZE, fg) != NULL) {
+	//    		printf("%s", buf);
+	    		sscanf (buf, "%s %s %s %s %f %f %f %f %f", string1,
+	    		   	  string2,string3,string4,&dummy,&voltage,&current,&temp);
+	    }
+
+	/*    int count;
+		for (count = 0; count < 7; count++){
+			printf("%s ", buf);
+		}
+	*/
+
+	  char dac_ok;
+	  dac_ok = 0x0;
+	  sc_get_ADC_values (file);
+
+	  sc_set_dac (file, 1, 4095);
+	  sc_set_dac (file, 2, 4095);
+	  sc_set_dac (file, 3, 4095);
+	  sc_set_dac (file, 4, 4095);
+	  sc_set_dac (file, 5, 4095);
+	  sc_set_dac (file, 6, 4095);
+
+return 0;
+}
+
+
+void low(){
+	 int opt = 0;
+		int file, i, j, ch, val,a,b,c,d,e,f,g,h;
+		FILE *fp, *fp1;
+		char filename[20];
+		char filename1[100];
+		char namedate[20];
+		time_t rawtime;
+		struct tm *timeinfo;
+	 	char buffer[80];
+		time ( &rawtime );
+		timeinfo = localtime ( &rawtime );
+		strftime(namedate,20,"%y%m%d%H%M%S",timeinfo);
+
+	//  printf("Settings Slow Control... ");
+	  snprintf(filename, 19, "/dev/i2c-0");
+	  	file = open(filename, O_RDWR);
+	  	if (file < 0) {
+	  			exit("no open file");
+	  	}
+	  	if (ioctl(file, I2C_SLAVE, SC_ADDR) < 0) {
+	  			exit("Fail to setup slave addr!");
+	  	}
+
+
+
+	// system ("SiPM_control HPO");
+
+	// data from SiPM if connected
+		#define BUFSIZE 128
+	    char *cmd = "SiPM_control HPO";
+	    char *buf[BUFSIZE];
+	    FILE *fg;
+	    if ((fg = popen(cmd, "r")) == NULL) {
+	        printf("Error opening pipe!\n");
+	        return -1;
+	    }
+
+
+	    char *string = buf;
+	//    printf("%c\n", string[1]);
+	    float dummy, voltage, current, temp;
+	    char string1[12],string2[10],string3[5],string4[7];
+
+	   while (fgets(buf, BUFSIZE, fg) != NULL) {
+	//    		printf("%s", buf);
+	    		sscanf (buf, "%s %s %s %s %f %f %f %f %f", string1,
+	    		   	  string2,string3,string4,&dummy,&voltage,&current,&temp);
+	    }
+
+	/*    int count;
+		for (count = 0; count < 7; count++){
+			printf("%s ", buf);
+		}
+	*/
+
+	  char dac_ok;
+	  dac_ok = 0x0;
+	  sc_get_ADC_values (file);
+
+         sc_set_dac (file, 1, 0);
+	 	 sc_set_dac (file, 2, 0);
+	 	 sc_set_dac (file, 3, 0);
+	 	 sc_set_dac (file, 4, 0);
+	 	 sc_set_dac (file, 5, 0);
+	 	 sc_set_dac (file, 6, 0);
+}

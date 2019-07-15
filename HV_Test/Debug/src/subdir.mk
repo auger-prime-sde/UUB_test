@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/HV_test.c 
+../src/HV_test_file.c 
 
 OBJS += \
-./src/HV_test.o 
+./src/HV_test_file.o 
 
 C_DEPS += \
-./src/HV_test.d 
+./src/HV_test_file.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
