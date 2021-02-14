@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/get_i_v.c 
+../src/SlowControl.c 
 
 OBJS += \
-./src/get_i_v.o 
+./src/SlowControl.o 
 
 C_DEPS += \
-./src/get_i_v.d 
+./src/SlowControl.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
