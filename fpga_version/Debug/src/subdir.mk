@@ -4,17 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/fpga_version.c \
+../src/fpga_ver.c \
 ../src/reg.c \
 ../src/teste.c 
 
 OBJS += \
-./src/fpga_version.o \
+./src/fpga_ver.o \
 ./src/reg.o \
 ./src/teste.o 
 
 C_DEPS += \
-./src/fpga_version.d \
+./src/fpga_ver.d \
 ./src/reg.d \
 ./src/teste.d 
 

@@ -25,29 +25,29 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 ELFSIZE += \
-fpga_version.elf.size \
+fpga_ver.elf.size \
 
 
 # All Target
-all: fpga_version.elf secondary-outputs
+all: fpga_ver.elf secondary-outputs
 
 # Tool invocations
-fpga_version.elf: $(OBJS)  $(USER_OBJS)
+fpga_ver.elf: $(OBJS)  $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linux gcc linker'
-	arm-xilinx-linux-gnueabi-gcc  -o "fpga_version.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-xilinx-linux-gnueabi-gcc  -o "fpga_ver.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-fpga_version.elf.size: fpga_version.elf
+fpga_ver.elf.size: fpga_ver.elf
 	@echo 'Invoking: ARM Linux Print Size'
-	arm-xilinx-linux-gnueabi-size fpga_version.elf  |tee "fpga_version.elf.size"
+	arm-xilinx-linux-gnueabi-size fpga_ver.elf  |tee "fpga_ver.elf.size"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(S_UPPER_DEPS)$(C_DEPS)$(ELFSIZE) fpga_version.elf
+	-$(RM) $(EXECUTABLES)$(OBJS)$(S_UPPER_DEPS)$(C_DEPS)$(ELFSIZE) fpga_ver.elf
 	-@echo ' '
 
 secondary-outputs: $(ELFSIZE)
