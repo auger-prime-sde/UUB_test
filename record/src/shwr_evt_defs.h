@@ -5,7 +5,6 @@
    structure of the data for the communication between mostly directly
    with the code which communicate mostly with Front-End, but it would
    be not propagate to all the rest of the others code.
-
 */
 
 #ifndef _SHWR_EVT_DEFS_
@@ -51,6 +50,8 @@ struct shwr_evt_raw
   struct shwr_gps_info ev_gps_info; 
   int32_t nsamples;
   uint32_t fadc_raw[SHWR_RAW_NCH_MAX][SHWR_NSAMPLES];
+  uint32_t peak[10];
+
 };
 
 #endif /*_SHWR_EVT_DEFS_*/

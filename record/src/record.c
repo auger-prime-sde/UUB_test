@@ -100,7 +100,6 @@ int main(int argc, char *argv[])
     char command1[100];
     sprintf(command1, "trigger %d %d %d %d %d %d", atoi(argv[1]),atoi(argv[2]),atoi(argv[3]),atoi(argv[4]),atoi(argv[5]),atoi(argv[6]));
 	system(command1);
-
 */
 
     while(nevt<1)
@@ -189,6 +188,20 @@ int read_evt_init()
 
 
 
+  system("devmem 0x43c20208 32 0");
+  system("devmem 0x43c20208 32 1");
+  system("devmem 0x43c20208 32 2");
+  system("devmem 0x43c20208 32 3");
+
+
+
+/*
+  gl.regs[SHWR_BUF_CONTROL_ADDR]=0;
+  gl.regs[SHWR_BUF_CONTROL_ADDR]=1;
+  gl.regs[SHWR_BUF_CONTROL_ADDR]=2;
+  gl.regs[SHWR_BUF_CONTROL_ADDR]=3;
+
+*/
 //  	  printf("led %x\n", gl.regs[SHWR_BUF_TRIG_MASK_ADDR]);
 
 
@@ -282,6 +295,18 @@ int read_evt_read(struct shwr_evt_raw *shwr)
     shwr->Evt_type_2=0;
     shwr->ev_gps_info.second=gl.regs[TTAG_SHWR_SECONDS_ADDR];
     shwr->ev_gps_info.ticks=gl.regs[TTAG_SHWR_NANOSEC_ADDR];
+    shwr->peak[0]=(gl.regs[SHWR_PEAK_AREA0_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[1]=(gl.regs[SHWR_PEAK_AREA1_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[2]=(gl.regs[SHWR_PEAK_AREA2_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[3]=(gl.regs[SHWR_PEAK_AREA3_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[4]=(gl.regs[SHWR_PEAK_AREA4_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[5]=(gl.regs[SHWR_PEAK_AREA5_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[6]=(gl.regs[SHWR_PEAK_AREA6_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[7]=(gl.regs[SHWR_PEAK_AREA7_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[8]=(gl.regs[SHWR_PEAK_AREA8_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+    shwr->peak[9]=(gl.regs[SHWR_PEAK_AREA9_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK;
+
+
 
     gl.regs[SHWR_BUF_CONTROL_ADDR]=rd;
     gl.id_counter++;
@@ -469,34 +494,29 @@ FeShwrRead_test(int Nev)
 	 	  		 	  		 	   printf("[");
 	 	  		 	  		 	   printf("{");
 
-	 	  		 	  		 	   		          printf ("\"peak0\": \"%d\"",(gl.regs[SHWR_PEAK_AREA0_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf(", \"peak1\": \"%d\"",(gl.regs[SHWR_PEAK_AREA1_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf(", \"peak2\": \"%d\"",(gl.regs[SHWR_PEAK_AREA2_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf(", \"peak3\": \"%d\"",(gl.regs[SHWR_PEAK_AREA3_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf (", \"peak4\": \"%d\"",(gl.regs[SHWR_PEAK_AREA4_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf(", \"peak5\": \"%d\"",(gl.regs[SHWR_PEAK_AREA5_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf (", \"peak6\": \"%d\"",(gl.regs[SHWR_PEAK_AREA6_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf(", \"peak7\": \"%d\"",(gl.regs[SHWR_PEAK_AREA7_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf (", \"peak8\": \"%d\"",(gl.regs[SHWR_PEAK_AREA8_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
-	 	  		 	  		 	   		          printf(", \"peak9\": \"%d\"",(gl.regs[SHWR_PEAK_AREA9_ADDR] >> SHWR_PEAK_SHIFT) & SHWR_PEAK_MASK);
+	 	  		 	  		 	   		          printf ("\"peak0\": \"%d\"",evt.peak[0]);
+	 	  		 	  		 	   		          printf(", \"peak1\": \"%d\"",evt.peak[1]);
+	 	  		 	  		 	   		          printf(", \"peak2\": \"%d\"",evt.peak[2]);
+	 	  		 	  		 	   		          printf(", \"peak3\": \"%d\"",evt.peak[3]);
+	 	  		 	  		 	   		          printf (", \"peak4\": \"%d\"",evt.peak[4]);
+	 	  		 	  		 	   		          printf(", \"peak5\": \"%d\"",evt.peak[5]);
+	 	  		 	  		 	   		          printf (", \"peak6\": \"%d\"",evt.peak[6]);
+	 	  		 	  		 	   		          printf(", \"peak7\": \"%d\"",evt.peak[7]);
+	 	  		 	  		 	   		          printf (", \"peak8\": \"%d\"",evt.peak[8]);
+	 	  		 	  		 	   		          printf(", \"peak9\": \"%d\"",evt.peak[9]);
 
 	 	  		 	  			 	   		      printf("}");
      	 	  	 	  		 	  		 	   	 printf("]");
 	   	  		 		  	     	      printf("}");
 
-/*
+	   	  		 		  	     	      /*
      int ind=max(basech0,SHWR_NSAMPLES);
      int ind2=max2(basech0,SHWR_NSAMPLES);
      printf("pulspos=%d, max=%d\n",ind,ind2);
-
-
 	     for(j=0;j<SHWR_NSAMPLES;j++){
-
 	   index=(j+evt.trace_start)%SHWR_NSAMPLES;
-
 	   printf( "base=%d j=%d\n"	, basech0[j],j);
 //	   printf( "evt=%d index=%d\n"	, evt.fadc_raw[0][index] & 0xFFF, index);
-
 	     }
 */
  //	 fclose(fp);
