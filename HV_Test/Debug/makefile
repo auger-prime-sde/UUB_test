@@ -25,29 +25,29 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 ELFSIZE += \
-HV_Test.elf.size \
+HV_Test_file.elf.size \
 
 
 # All Target
-all: HV_Test.elf secondary-outputs
+all: HV_Test_file.elf secondary-outputs
 
 # Tool invocations
-HV_Test.elf: $(OBJS)  $(USER_OBJS)
+HV_Test_file.elf: $(OBJS)  $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linux gcc linker'
-	arm-xilinx-linux-gnueabi-gcc  -o "HV_Test.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-xilinx-linux-gnueabi-gcc  -o "HV_Test_file.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-HV_Test.elf.size: HV_Test.elf
+HV_Test_file.elf.size: HV_Test_file.elf
 	@echo 'Invoking: ARM Linux Print Size'
-	arm-xilinx-linux-gnueabi-size HV_Test.elf  |tee "HV_Test.elf.size"
+	arm-xilinx-linux-gnueabi-size HV_Test_file.elf  |tee "HV_Test_file.elf.size"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(S_UPPER_DEPS)$(C_DEPS)$(ELFSIZE) HV_Test.elf
+	-$(RM) $(EXECUTABLES)$(OBJS)$(S_UPPER_DEPS)$(C_DEPS)$(ELFSIZE) HV_Test_file.elf
 	-@echo ' '
 
 secondary-outputs: $(ELFSIZE)
